@@ -142,6 +142,7 @@ auto_forecast <- function(train, test, var_name) {
 	)
 	
 	h2o.shutdown(prompt = FALSE) # close h2o vm
+	Sys.sleep(30)
 	
 	return(res)
 	

@@ -26,10 +26,11 @@ Sys.setenv(JAVA_HOME = "/usr/lib/jvm/jdk-17/") # h2o jvm
 # Data
 train_dtt <- ymd_hms(c("2009-07-01 00:00:00", "2011-01-01 00:00:00"))
 
-data_train <- read_csv("data/train.csv") |> 
+data_train <- read_csv("data/train.csv", show_col_types = FALSE) |> 
 	mutate(date = ymd_h(date)) |> 
 	filter(between(date, train_dtt[1], train_dtt[2]))
-data_test <- read_csv("data/test.csv") |> mutate(date = ymd_h(date)) 
+data_test <- read_csv("data/test.csv", show_col_types = FALSE) |> 
+	mutate(date = ymd_h(date)) 
 
 # Compute forecasts
 res <- map(
@@ -40,4 +41,17 @@ res
 
 write_csv(res$forecast_tbl, "exam/marcozanotti_forecasts.csv")
 write_csv(res$evaluation_tbl, "exam/marcozanotti_metrics.csv")
+
+
+# ts_plot <- read_csv("data/train.csv", show_col_types = FALSE) |> 
+# 	mutate(date = ymd_h(date), type = "actual") |>  
+# 	bind_rows(
+# 		read_csv("exam/marcozanotti_forecasts.csv") |> mutate(id = NULL, type = "forecast")
+# 	) |> 
+# 	pivot_longer(cols = wp1:wp7) |> 
+# 	arrange(name, date)
+# 
+# ts_plot |>
+# 	filter(name == "wp1") |> 
+# 	plot_time_series(.date_var = date, .value = value, .color_var = type, .facet_vars = name)
 
