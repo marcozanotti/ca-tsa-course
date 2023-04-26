@@ -55,3 +55,12 @@ write_csv(res$evaluation_tbl, "exam/marcozanotti_metrics.csv")
 # 	filter(name == "wp1") |> 
 # 	plot_time_series(.date_var = date, .value = value, .color_var = type, .facet_vars = name)
 
+# read_csv("exam/marcozanotti_forecasts.csv") |> 
+# 	mutate(
+# 		date = as.character(date) |> 
+# 			str_remove_all(":00:00") |> 
+# 			str_remove_all("-") |> 
+# 			str_remove_all("\\s")
+# 	) |> 
+# 		write_csv("exam/marcozanotti_forecasts.csv") |> 
+# 		mutate(across(where(is.numeric), ~ round(.x, 3)))
